@@ -1,0 +1,165 @@
+{
+  "rank": 3,
+  "language": "python",
+  "subjects": [
+    {
+      "id": "py_number_base_converter",
+      "title": "Number Base Converter",
+      "difficulty": "medium",
+      "assignment": "Convertit un nombre d'une base à une autre (2-36). Utilise 0-9 et A-Z. Retourne 'ERROR' si la base est invalide ou si les chiffres ne correspondent pas à la base.",
+      "signature": "def number_base_converter(number: str, from_base: int, to_base: int) -> str:",
+      "tests": [
+        {"input": [["1010", 2, 10]], "expected": "10"},
+        {"input": [["Z", 36, 10]], "expected": "35"},
+        {"input": [["FF", 16, 10]], "expected": "255"},
+        {"input": [["10", 10, 2]], "expected": "1010"},
+        {"input": [["G", 16, 10]], "expected": "ERROR"},
+        {"input": [["10", 1, 10]], "expected": "ERROR"}
+      ]
+    },
+    {
+      "id": "py_mirror_matrix",
+      "title": "Mirror Matrix",
+      "difficulty": "easy",
+      "assignment": "Inverse horizontalement chaque ligne d'une matrice 2D.",
+      "signature": "def mirror_matrix(matrix: list[list[int]]) -> list[list[int]]:",
+      "tests": [
+        {"input": [[[1, 2], [3, 4]]], "expected": [[2, 1], [4, 3]]},
+        {"input": [[[1, 2, 3], [4, 5, 6]]], "expected": [[3, 2, 1], [6, 5, 4]]},
+        {"input": [[[42]]], "expected": [[42]]}
+      ]
+    },
+    {
+      "id": "py_bracket_validator",
+      "title": "Bracket Validator",
+      "difficulty": "medium",
+      "assignment": "Vérifie si les parenthèses (), crochets [] et accolades {} sont bien équilibrés et imbriqués.",
+      "signature": "def bracket_validator(s: str) -> bool:",
+      "tests": [
+        {"input": [["([)]"]], "expected": false},
+        {"input": [["{[]}"]], "expected": true},
+        {"input": [["()"]], "expected": true},
+        {"input": [["((("]], "expected": false},
+        {"input": [["[{()}]"]], "expected": true},
+        {"input": [[""]], "expected": true}
+      ]
+    },
+    {
+      "id": "py_is_anagram",
+      "title": "Is Anagram",
+      "difficulty": "easy",
+      "assignment": "Détermine si deux chaînes sont des anagrammes (mêmes lettres, mêmes fréquences).",
+      "signature": "def is_anagram(s1: str, s2: str) -> bool:",
+      "tests": [
+        {"input": [["listen", "silent"]], "expected": true},
+        {"input": [["hello", "world"]], "expected": false},
+        {"input": [["abc", "cba"]], "expected": true},
+        {"input": [["a", "a"]], "expected": true}
+      ]
+    },
+    {
+      "id": "py_alternate_case",
+      "title": "Alternate Case",
+      "difficulty": "easy",
+      "assignment": "Alterne la casse des lettres (Majuscule, minuscule...). Les caractères non-alphabétiques sont ignorés dans le comptage de l'alternance.",
+      "signature": "def alternate_case(s: str) -> str:",
+      "tests": [
+        {"input": [["hello!"]], "expected": "HeLlO!"},
+        {"input": [["hello world"]], "expected": "HeLlO wOrLd"},
+        {"input": [["123abc"]], "expected": "123AbC"},
+        {"input": [["a"]], "expected": "A"},
+        {"input": [[""]], "expected": ""}
+      ]
+    },
+    {
+      "id": "py_caesar_cipher",
+      "title": "Caesar Cipher",
+      "difficulty": "easy",
+      "assignment": "Applique un décalage de César sur une chaîne. Préserve la casse et ignore les caractères spéciaux.",
+      "signature": "def caesar_cipher(s: str, shift: int) -> str:",
+      "tests": [
+        {"input": [["abc", 1]], "expected": "bcd"},
+        {"input": [["xyz", 3]], "expected": "abc"},
+        {"input": [["Hello, World!", 13]], "expected": "Uryyb, Jbeyq!"},
+        {"input": [["abc", 0]], "expected": "abc"},
+        {"input": [["ABC", 1]], "expected": "BCD"}
+      ]
+    },
+    {
+      "id": "py_sort_words",
+      "title": "Sort Words",
+      "difficulty": "hard",
+      "assignment": "Trie une liste de mots selon : 1) Longueur (croissant), 2) Nombre de voyelles (décroissant), 3) Alphabétique (insensible à la casse).",
+      "signature": "def sort_words(words: list[str]) -> list[str]:",
+      "tests": [
+        {"input": [[["apple", "bat", "eagle"]]], "expected": ["bat", "apple", "eagle"]},
+        {"input": [[["cat", "dog", "ant"]]], "expected": ["ant", "cat", "dog"]},
+        {"input": [[["hi", "go", "ax"]]], "expected": ["ax", "go", "hi"]}
+      ]
+    },
+    {
+      "id": "py_is_palindrome",
+      "title": "Is Palindrome",
+      "difficulty": "easy",
+      "assignment": "Vérifie si une chaîne est un palindrome en ignorant la casse et les caractères non-alphanumériques.",
+      "signature": "def is_palindrome(s: str) -> bool:",
+      "tests": [
+        {"input": [["racecar"]], "expected": true},
+        {"input": [["hello"]], "expected": false},
+        {"input": [["A man a plan a canal Panama"]], "expected": true},
+        {"input": [["Was it a car or a cat I saw"]], "expected": true}
+      ]
+    },
+    {
+      "id": "py_find_runner_up",
+      "title": "Find Runner Up",
+      "difficulty": "easy",
+      "assignment": "Trouve le deuxième score le plus élevé (unique) dans une liste d'entiers.",
+      "signature": "def find_runner_up(scores: list[int]) -> int:",
+      "tests": [
+        {"input": [[[10, 10, 9, 8]]], "expected": 9},
+        {"input": [[[5, 4, 3, 2, 1]]], "expected": 4},
+        {"input": [[[1, 2]]], "expected": 1},
+        {"input": [[[100, 100, 100, 99]]], "expected": 99}
+      ]
+    },
+    {
+      "id": "py_count_islands",
+      "title": "Count Islands",
+      "difficulty": "hard",
+      "assignment": "Compte le nombre d'îles (1) entourées d'eau (0) dans une grille 2D (connexions horizontales et verticales).",
+      "signature": "def count_islands(grid: list[list[int]]) -> int:",
+      "tests": [
+        {"input": [[[[1,1,0],[0,0,1]]]], "expected": 2},
+        {"input": [[[[1,1,1],[0,1,0],[0,1,1]]]], "expected": 1},
+        {"input": [[[[0,0,0]]]], "expected": 0},
+        {"input": [[[[1,0,1],[0,0,0],[1,0,1]]]], "expected": 4}
+      ]
+    },
+    {
+      "id": "py_longest_consecutive",
+      "title": "Longest Consecutive",
+      "difficulty": "hard",
+      "assignment": "Trouve la longueur de la plus longue suite d'entiers consécutifs dans une liste non triée.",
+      "signature": "def longest_consecutive(nums: list[int]) -> int:",
+      "tests": [
+        {"input": [[[100, 4, 200, 1, 3, 2]]], "expected": 4},
+        {"input": [[[0, 3, 7, 2, 5, 8, 4, 6, 0, 1]]], "expected": 9},
+        {"input": [[[]]], "expected": 0},
+        {"input": [[[5]]], "expected": 1}
+      ]
+    },
+    {
+      "id": "py_matrix_transposition",
+      "title": "Matrix Transposition",
+      "difficulty": "easy",
+      "assignment": "Réalise la transposition d'une matrice (les lignes deviennent des colonnes).",
+      "signature": "def transpose_matrix(matrix: list[list[int]]) -> list[list[int]]:",
+      "tests": [
+        {"input": [[[[1, 2], [3, 4], [5, 6]]]], "expected": [[1, 3, 5], [2, 4, 6]]},
+        {"input": [[[[1, 2, 3]]]], "expected": [[1], [2], [3]]},
+        {"input": [[[[1]]]], "expected": [[1]]}
+      ]
+    }
+  ]
+}
