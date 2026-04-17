@@ -25,6 +25,10 @@ def _build_runner(subject: dict, student_file: Path) -> str:
     func_name = subject["signature"].split("(")[0].replace("def ", "").strip()
     tests_json = json.dumps(subject["tests"])
 
+    # Calcul du nombre de paramètres ici en Python, avant génération du script
+    between = subject["signature"].split("(")[1].split(")")[0].strip()
+    nb_params = len(between.split(",")) if between else 0
+
     return textwrap.dedent(f"""
 import sys, json, traceback
 
@@ -39,16 +43,16 @@ if func is None:
     print(json.dumps({{"error": "Fonction '{func_name}' introuvable"}}))
     sys.exit(1)
 
-tests   = json.loads({tests_json!r})
-results = []
+tests     = json.loads({tests_json!r})
+results   = []
+nb_params = {nb_params}
 
 for i, test in enumerate(tests):
-    args     = test["input"][0] if len(test["input"]) == 1 else test["input"]
+    args     = test["input"][0]
     expected = test["expected"]
     try:
-        if isinstance(args, list) and not isinstance(args[0], list):
-            # args est une liste plate de paramètres
-            actual = func(*args)
+        if nb_params == 1:
+            actual = func(args)
         else:
             actual = func(*args)
         passed = (actual == expected)
@@ -115,7 +119,6 @@ def run_tests(subject: dict, student_file: Path) -> tuple[list[dict], int]:
         )
 
     try:
-        # Gère le cas où le runner retourne {"error": ...}
         parsed = json.loads(stdout)
         if isinstance(parsed, dict) and "error" in parsed:
             return (
