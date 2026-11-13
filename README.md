@@ -1,175 +1,98 @@
-# 📋 grademe_python
+# grademe_python
 
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   ██████╗ ██████╗  █████╗ ██████╗ ███████╗███╗   ███╗███████╗   ║
-║  ██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██╔════╝████╗ ████║██╔════╝   ║
-║  ██║  ███╗██████╔╝███████║██║  ██║█████╗  ██╔████╔██║█████╗     ║
-║  ██║   ██║██╔══██╗██╔══██║██║  ██║██╔══╝  ██║╚██╔╝██║██╔══╝     ║
-║  ╚██████╔╝██║  ██║██║  ██║██████╔╝███████╗██║ ╚═╝ ██║███████╗   ║
-║   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝     ╚═╝╚══════╝   ║
-║                                                                  ║
-║              Clone d'examshell — Rank 03 · Python                ║
-║                      by mobenais @ 42                            ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+Clone local d'`examshell` pour s'entraîner aux exercices Python du **Rank 03**
+de l'école 42. Il reproduit le déroulé de l'examen : sujet tiré au sort,
+fichier à rendre dans `rendu/`, correction automatique et score en
+pourcentage.
 
-> ⚠️ **Projet non officiel** — Outil d'entraînement personnel, sans affiliation avec l'école 42.
+> Projet non officiel, outil d'entraînement personnel sans affiliation avec
+> l'école 42.
 
----
+![navigation dans le menu de grademe_python](docs/demo.gif)
 
-## 📌 Présentation
+## Fonctionnalités
 
-**grademe_python** est un clone local d'`examshell` conçu pour s'entraîner aux exercices Python du **Rank 03** de l'école 42.  
-Il reproduit le workflow de l'examen réel : sujet aléatoire, fichier à rendre dans `rendu/`, correction automatique, score en pourcentage.
+- interface TUI navigable au clavier (flèches ou `j` / `k`, Entrée, `q`)
+- mode examen : un sujet aléatoire, avec filtre de difficulté optionnel
+- mode entraînement : tu choisis le sujet dans la liste
+- mode challenge : tous les sujets, de easy à hard
+- historique des sessions passées
+- correcteur automatique dans un sous-processus isolé (timeout 5 s)
 
-Il embarque également :
-- une **interface TUI interactive** (navigation clavier)
-- un **mode challenge** (tous les sujets, easy → medium → hard)
-- un **historique** des sessions passées
+Aucune dépendance externe : Python 3.10 ou plus et `make` suffisent.
+La navigation clavier repose sur `termios` et `tty`, donc Linux ou macOS.
 
----
+## Installation
 
-## 🗂️ Structure du projet
-
-```
-grademe_python/
-├── Makefile              ← Commandes principales
-├── requirements.txt      ← Aucune dépendance externe
-├── examshell.py          ← CLI (start / status / grademe / finish)
-├── grader.py             ← Correcteur automatique (subprocess isolé)
-├── display.py            ← Affichage coloré ANSI
-├── menu.py               ← Interface TUI interactive
-├── subjects/
-│   └── rank03.json       ← 12 sujets avec tests
-├── sessions/             ← Historique des sessions (auto-créé)
-└── rendu/                ← Ton fichier Python à rendre (auto-créé)
-```
-
----
-
-## ⚙️ Prérequis
-
-| Outil     | Version minimale |
-|-----------|-----------------|
-| Python    | ≥ 3.10          |
-| Make      | any             |
-| OS        | Linux / macOS   |
-
-> `termios` et `tty` (navigation clavier du TUI) ne sont **pas disponibles sur Windows**.
-
-Aucune dépendance externe — zéro `pip install`.
-
----
-
-## 🚀 Installation
-
-```bash
-git clone https://github.com/mobenais/grademe_python.git
-cd grademe_python
+```sh
+git clone https://github.com/simPly-invent/grademe_python_RANK3.git
+cd grademe_python_RANK3
 make
 ```
 
-C'est tout.
+## Utilisation
 
----
-
-## 🎮 Utilisation
-
-### Interface interactive (recommandé)
-
-```bash
-make
+```sh
+make              # interface interactive (menu TUI)
+make exam         # examen rapide, sujet aléatoire
+make challenge    # mode challenge complet
+make status       # session en cours et chrono
+make grademe      # corrige le fichier dans rendu/
+make finish       # termine la session
+make history      # sessions passées
+make clean        # remet à zéro la session et rendu/
 ```
 
-Navigation avec `↑` `↓` et `Entrée`. Quatre modes disponibles depuis le menu :
+Ou directement en Python :
 
-| Option | Description |
-|--------|-------------|
-| Commencer un examen | Sujet aléatoire (filtre difficulté optionnel) |
-| Mode entraînement | Tu choisis le sujet dans la liste |
-| Mode challenge | Tous les sujets, easy → medium → hard |
-| Historique | Tableau des sessions passées |
-
----
-
-### CLI directe
-
-```bash
-make exam          # Examen rapide — sujet aléatoire
-make challenge     # Mode challenge complet
-make status        # Session en cours + chrono
-make grademe       # Corriger le fichier dans rendu/
-make finish        # Terminer la session
-make history       # Sessions passées
-make clean         # Reset session + rendu/
-make help          # Afficher l'aide
-```
-
-Ou directement via Python :
-
-```bash
+```sh
 python3 examshell.py start          # sujet aléatoire
 python3 examshell.py start -d easy  # filtre par difficulté
 python3 examshell.py grademe
 python3 examshell.py finish
 ```
 
----
+### Déroulé type
 
-## 🧪 Workflow typique
+1. `make`, puis "Commencer un examen" et choix de la difficulté
+2. ouvre `rendu/<sujet>.py` dans ton éditeur et code la solution
+3. `make grademe` pour la correction automatique
+4. à 100 %, `make finish` pour le bilan et la sauvegarde dans l'historique
 
-```
-1.  make                         # Lance le menu
-2.  → Commencer un examen        # Choisir la difficulté
-3.  Ouvre rendu/<sujet>.py       # Dans ton éditeur
-4.  Code ta solution
-5.  make grademe                 # Correction automatique
-6.  → 100% ?  make finish        # Bilan + sauvegarde
-```
+## Sujets disponibles (Rank 03)
 
----
+| #  | Sujet                 | Difficulté |
+|----|-----------------------|------------|
+| 01 | Number Base Converter | medium     |
+| 02 | Mirror Matrix         | easy       |
+| 03 | Bracket Validator     | medium     |
+| 04 | Is Anagram            | easy       |
+| 05 | Alternate Case        | easy       |
+| 06 | Caesar Cipher         | easy       |
+| 07 | Sort Words            | hard       |
+| 08 | Is Palindrome         | easy       |
+| 09 | Find Runner Up        | easy       |
+| 10 | Count Islands         | hard       |
+| 11 | Longest Consecutive   | hard       |
+| 12 | Matrix Transposition  | easy       |
 
-## 📚 Sujets disponibles (Rank 03)
+## Correcteur
 
-| # | Sujet | Difficulté |
-|---|-------|-----------|
-| 01 | Number Base Converter | 🟡 Medium |
-| 02 | Mirror Matrix | 🟢 Easy |
-| 03 | Bracket Validator | 🟡 Medium |
-| 04 | Is Anagram | 🟢 Easy |
-| 05 | Alternate Case | 🟢 Easy |
-| 06 | Caesar Cipher | 🟢 Easy |
-| 07 | Sort Words | 🔴 Hard |
-| 08 | Is Palindrome | 🟢 Easy |
-| 09 | Find Runner Up | 🟢 Easy |
-| 10 | Count Islands | 🔴 Hard |
-| 11 | Longest Consecutive | 🔴 Hard |
-| 12 | Matrix Transposition | 🟢 Easy |
-
----
-
-## 🔧 Correcteur automatique
-
-Le correcteur (`grader.py`) exécute ta fonction dans un **subprocess isolé** avec un timeout de 5 secondes.  
-Il compare les sorties aux résultats attendus et retourne un score en pourcentage.
+`grader.py` exécute ta fonction dans un sous-processus isolé, compare les
+sorties aux résultats attendus et renvoie un score :
 
 ```
-  ✓ Test 1/4
-  ✓ Test 2/4
-  ✗ Test 3/4  attendu=True  obtenu=None
-  ✓ Test 4/4
+  OK  Test 1/4
+  OK  Test 2/4
+  KO  Test 3/4  attendu=True  obtenu=None
+  OK  Test 4/4
 
-  Score : [████████████████████░░░░░░░░░░] 75%  (3/4 tests)
+  Score : [####################..........] 75%  (3/4 tests)
 ```
 
----
+## Ajouter des sujets
 
-## 📝 Ajouter des sujets
-
-Les sujets sont définis dans `subjects/rank03.json`.  
-Chaque entrée suit ce format :
+Les sujets sont définis dans `subjects/rank03.json` :
 
 ```json
 {
@@ -184,23 +107,20 @@ Chaque entrée suit ce format :
 }
 ```
 
----
+## Structure
 
-## 👤 Auteur
+```
+.
+├── Makefile              commandes principales
+├── examshell.py          CLI (start / status / grademe / finish)
+├── grader.py             correcteur automatique
+├── display.py            affichage ANSI
+├── menu.py               interface TUI
+├── subjects/rank03.json  12 sujets avec leurs tests
+├── sessions/             historique (créé automatiquement)
+└── rendu/                ton fichier à rendre (créé automatiquement)
+```
 
-| | |
-|---|---|
-| **Login** | mobenais |
-| **École** | 42 |
-| **Projet** | grademe_python |
+## Auteur
 
----
-
-## ⚖️ Licence
-
-Projet personnel open source — pas de droits réservés.  
-Les sujets sont inspirés du contenu pédagogique de l'école 42 (non officiel).
-
----
-
-*Made with ☕ and `python3` by mobenais*
+mobenais, étudiant à 42.
